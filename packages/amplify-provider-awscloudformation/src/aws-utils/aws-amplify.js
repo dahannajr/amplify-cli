@@ -25,9 +25,13 @@ async function getConfiguredAmplifyClient(context, options = {}) {
     aws.config.update({
       httpOptions: {
         agent: proxyAgent(httpProxy),
-      },
+      }
     });
   }
+
+  aws.config.update({
+    endpoint: 'https://localhost.localstack.cloud:4566'
+  });
 
   const config = { ...cred, ...defaultOptions, ...options };
 
@@ -39,6 +43,8 @@ async function getConfiguredAmplifyClient(context, options = {}) {
     return undefined;
   }
   // this is the "general" config level case, aws sdk will resolve creds and region from env variables etc.
+
+  
   return new aws.Amplify(config);
 }
 

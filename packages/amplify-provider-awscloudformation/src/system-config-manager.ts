@@ -66,6 +66,9 @@ export const setProfile = (awsConfigInfo: $TSAny, profileName: string): void => 
       region: awsConfigInfo.region,
     };
   }
+  if (config['accessKeyId'] === 'test' && config['secretAccessKey'] === 'test') {
+    config['endpoint'] = 'https://localhost.localstack.cloud:4566';
+  }
   logger('setProfile.writeCredentialsFilePath', [credentialsFilePath])();
   fs.writeFileSync(credentialsFilePath, ini.stringify(credentials), { mode: SecretFileMode });
   fs.writeFileSync(configFilePath, ini.stringify(config), { mode: SecretFileMode });

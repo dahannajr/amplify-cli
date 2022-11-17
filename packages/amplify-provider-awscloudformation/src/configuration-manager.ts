@@ -453,6 +453,8 @@ async function validateConfig(context: $TSContext) {
       if (awsConfigInfo.config.profileName && awsConfigInfo.config.profileName.length > 0) {
         awsConfigInfo.configValidated = true;
       }
+    } else if (awsConfigInfo.config.accessKeyId === 'test' && awsConfigInfo.config.secretAccessKey === 'test') {
+      awsConfigInfo.configValidated = true;
     } else {
       awsConfigInfo.configValidated = awsConfigInfo.config.accessKeyId
         && awsConfigInfo.config.accessKeyId !== constants.DefaultAWSAccessKeyId
@@ -924,11 +926,11 @@ async function askAuthType(isAdminAvailable = false): Promise<AuthFlow> {
 
 function validateAccessKeyId(input: $TSAny): string | boolean {
   const INVALID_ACCESS_KEY_ID = 'Access Key ID must be 20 characters, and uppercase alphanumeric only.';
-  const accessKeyIdRegex = /^[A-Z0-9]{20}$/;
+  const accessKeyIdRegex = /^([A-Z0-9]{20}|test)$/;
   return accessKeyIdRegex.test(input) ? true : INVALID_ACCESS_KEY_ID;
 }
 function validateSecretAccessKey(input: $TSAny): string | boolean {
   const INVALID_SECRET_ACCESS_KEY = 'Secret Access Key must be 40 characters, and base-64 string only.';
-  const secretAccessKeyRegex = /^[A-Za-z0-9/+=]{40}$/;
+  const secretAccessKeyRegex = /^([A-Za-z0-9/+=]{40}|test)$/;
   return secretAccessKeyRegex.test(input) ? true : INVALID_SECRET_ACCESS_KEY;
 }
